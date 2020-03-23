@@ -20,27 +20,44 @@ import pygame,sys,ctypes,time,information
 from math import *
 import math
 pygame.init()
-h=information.draw_information.h
-w=information.draw_information.w
-l=information.draw_information.l
-out=information.draw_information.out
-f=information.draw_information.f
-sf=information.draw_information.sf
-sleeptime=information.draw_information.sleeptime
-size=information.draw_information.size
-#RGB
-pencolor=information.draw_information.c1
-h+=out
-w+=out
-defofbgc=information.draw_information.defofbgc
-if defofbgc == 1:
-    backgrcolor=information.draw_information.nightbgc
-elif defofbgc == 0:
-    backgrcolor=information.draw_information.backgrcolor
-screen = pygame.display.set_mode([w,h])
-screen.fill(backgrcolor)
-fxAnimate = information.draw_information.fxAnimate
-fxprintvalue = information.draw_information.fxprintvalue
+global h,w,l,out,f,sf,sleeptime,size,pencolor,defofbgc,backgrcolor,fxAnimate,fxprintvalue,screen
+def readinf():
+    global screen
+    global h
+    global w
+    global l
+    global out
+    global f
+    global sf
+    global sleeptime
+    global size
+    global pencolor
+    global defofbgc
+    global backgrcolor
+    global fxAnimate
+    global fxprintvalue
+    h=information.draw_information.h
+    w=information.draw_information.w
+    l=information.draw_information.l
+    out=information.draw_information.out
+    f=information.draw_information.f
+    sf=information.draw_information.sf
+    sleeptime=information.draw_information.sleeptime
+    size=information.draw_information.size
+    #RGB
+    pencolor=information.draw_information.c1
+    h+=out
+    w+=out
+    defofbgc=information.draw_information.defofbgc
+    if defofbgc == 1:
+        backgrcolor=information.draw_information.nightbgc
+    elif defofbgc == 0:
+        backgrcolor=information.draw_information.backgrcolor
+    screen = pygame.display.set_mode([w,h])
+    screen.fill(backgrcolor)
+    fxAnimate = information.draw_information.fxAnimate
+    fxprintvalue = information.draw_information.fxprintvalue
+    drawline()
 def drawline():
     pygame.draw.lines(screen,[0,0,0],False,[[0,h/2],[w,h/2]],1);
     pygame.draw.lines(screen,[0,0,0],False,[[w/2,0],[w/2,h]],1);
@@ -290,6 +307,70 @@ def drawfx():
     pos=[0,0]
     screen.blit(surf,pos)
     pygame.display.flip()
+def command():
+    while 1:
+        cinput = input("Command [input \"help\" to see Help list] >>> ")
+        if cinput == "help" :
+            print("""Help list:
+acc : Change Accuracy.
+bgc : Change BACKGROUND_COLOR.
+cls : Clean the screen.
+exit : Exit command mode.
+fxA : Show function drawing process.
+fxp : Show value.
+high : Change HIGH_OF_THE_SCREEN.
+inf : print information.
+nbgc : NIGHT_BACKGROUND_COLOR.
+out : Change Off-screen character display.
+pid : Change Pixels in a grid.
+size : Change Brush size.
+st : Change sleeptime.
+width : Change WIDTH_OF_THE_SCREEN.""")
+        elif cinput == "inf" :
+            print(information.draw_information.printinf(information.draw_information))
+        elif cinput == "exit" :
+            break
+        elif cinput == "cls" :
+            os.system("cls")
+        elif cinput == "pid":
+            cinput = input("Pixels in a grid(1<=l<=100)=")
+            information.draw_information.l=int(cinput)
+        elif cinput == "high":
+            cinput = input("HIGH_OF_THE_SCREEN=")
+            information.draw_information.h=int(cinput)
+        elif cinput == "width":
+            cinput = input("WIDTH_OF_THE_SCREEN=")
+            information.draw_information.w=int(cinput)
+        elif cinput == "st":
+            cinput = input("sleeptime=")
+            information.draw_information.sleeptime=int(cinput)
+        elif cinput == "acc":
+            cinput = input("Accuracy=")
+            information.draw_information.f=int(cinput)
+        elif cinput == "out":
+            cinput = input("Off-screen character display=")
+            information.draw_information.out=int(cinput)
+        elif cinput == "size":
+            cinput = input("Brush size=")
+            information.draw_information.size=int(cinput)
+        elif cinput == "bgc":
+            fc = input("BACKGROUND_COLOR first num=")
+            sc = input("BACKGROUND_COLOR second num=")
+            tc = input("BACKGROUND_COLOR third num=")
+            information.draw_information.backgrcolor=[int(fc),int(sc),int(tc)]
+        elif cinput == "nbgc":
+            fc = input("NIGHT_BACKGROUND_COLOR first num=")
+            sc = input("NIGHT_BACKGROUND_COLOR second num=")
+            tc = input("NIGHT_BACKGROUND_COLOR third num=")
+            information.draw_information.nightbgc=[int(fc),int(sc),int(tc)]
+        elif cinput == "fxA":
+            cinput = input("Show function drawing process=")
+            information.draw_information.fxAnimate=bool(cinput)
+        elif cinput == "fxp":
+            cinput = input("Show value=")
+            information.draw_information.fxprintvalue=bool(cinput)
+        else :
+            print("Error command.")
 def drawpoint():
     global tmx
     global tmy
@@ -300,14 +381,17 @@ def drawpoint():
     pygame.draw.line(screen,[255,0,0],[lmx,lmy],[tmx,tmy],size*2)
     pygame.draw.line(screen,[255,0,0],[tmx,tmy],[tmx,tmy],size*2)
     pygame.display.flip()
+readinf()
 running = True
-drawline()
 ifd=False
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
         if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_i:
+                command()
+                readinf()
             if event.key == pygame.K_ESCAPE:
                 running = False
             if event.key == pygame.K_d:

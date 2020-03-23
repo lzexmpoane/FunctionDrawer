@@ -8,8 +8,8 @@ class draw_information(object):
     #WIDTH_OF_THE_SCREEN
     w=800
 
-    #Number of pixels in a grid(1<=l<=100)
-    l=100
+    #Pixels in a grid(1<=l<=100)
+    l=50
     #Off-screen character display
     out=20
 
@@ -45,8 +45,9 @@ class draw_information(object):
     c7=[135,206,235]
     c8=[0,139,139]
     c9=[0,0,0]
+
     def __init__(self):
-        f
+        pass
 
     #FUNCTION
     f1name="y=x"
@@ -93,3 +94,15 @@ class draw_information(object):
     def f9(x):
         y=sin(1/x)
         return y
+
+    def printinf(self):
+        informationstr="This is information of FunctionDrawer.\nHIGH_OF_THE_SCREEN="+str(self.h)+"px.\n\
+WIDTH_OF_THE_SCREEN="+str(self.w)+"px.\nPixels in a grid(1<=l<=100)="+str(self.l)+"px.\n\
+Off-screen character display="+str(self.out)+"px.\nAccuracy="+str(self.f)+".\nIntervals(ms)="+str(self.sleeptime)+"ms.\n\
+Brush size="+str(self.size)+"px.\nBACKGROUND_COLOR="+str(self.backgrcolor)+".\nNIGHT_BACKGROUND_COLOR="+str(self.nightbgc)+".\n\
+Show function drawing process="+str(self.fxAnimate)+".\nShow value="+str(self.fxprintvalue)+".\n\
+COLOR_OF_DRAWING_FUNCTION=\n{\n    c1="+str(self.c1)+";\n    c2="+str(self.c2)+";\n    c3="+str(self.c3)+";\n    c4="+str(self.c4)+";\n\
+    c5="+str(self.c5)+";\n    c6="+str(self.c6)+";\n    c7="+str(self.c7)+";\n    c8="+str(self.c8)+";\n    c9="+str(self.c9)+"\n}\nFunction1: "+str(self.f1name)+"\n\
+Function2: "+str(self.f2name)+"\nFunction3: "+str(self.f3name)+"\nFunction4: "+str(self.f4name)+"\nFunction5: "+str(self.f5name)+"\n\
+Function6: "+str(self.f6name)+"\nFunction7: "+str(self.f7name)+"\nFunction8: "+str(self.f8name)+"\nFunction9: "+str(self.f9name)+"\n"
+        return informationstr
